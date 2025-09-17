@@ -13,6 +13,20 @@ namespace StringManipulationChallenge
             */
             //when you call a method, you call it with arguments. The args values are held in a variable.
 
+            // Example Test calls
+
+            // Testing StringToUpper
+            string input1 = "chicken";
+            Console.WriteLine("StringToUpper: " + StringToUpper(input1));
+
+            // Testing StringToLower
+            string input2 = "CHICKEN";
+            Console.WriteLine("StringToLower: " + StringToLower(input2));
+
+            // Testing StringToLower
+            string input3 = "           CHICKEN             ";
+            Console.WriteLine("StringTrim: " + StringTrim(input3));
+
 
         }
 
@@ -38,7 +52,8 @@ namespace StringManipulationChallenge
         /// <returns></returns>       
         public static string StringToLower(string usersString)
         {
-            throw new NotImplementedException("StringToUpper method not implemented.");
+            //throw new NotImplementedException("StringToUpper method not implemented.");
+            return usersString.ToLower();
         }
 
         /// <summary>
@@ -51,7 +66,9 @@ namespace StringManipulationChallenge
         /// <returns></returns>
         public static string StringTrim(string usersStringWithWhiteSpace)
         {
-            throw new NotImplementedException("StringTrim method not implemented.");
+            //throw new NotImplementedException("StringTrim method not implemented.");
+            return usersStringWithWhiteSpace.Trim();
+
         }
 
         /// <summary>
@@ -66,7 +83,8 @@ namespace StringManipulationChallenge
         /// <returns></returns>
         public static string StringSubstring(string x, int firstElement, int lengthOfSubsring)
         {
-            throw new NotImplementedException("StringSubstring method not implemented.");
+            //throw new NotImplementedException("StringSubstring method not implemented.");
+            return x.Substring(firstElement, lengthOfSubsring);
         }
 
         /// <summary>
@@ -81,7 +99,7 @@ namespace StringManipulationChallenge
         /// <returns></returns>
         public static int SearchChar(string userInputString, char charUserWants)
         {
-            throw new NotImplementedException("SearchChar method not implemented.");
+            return userInputString.IndexOf(charUserWants);
         }
 
         /// <summary>
@@ -96,7 +114,7 @@ namespace StringManipulationChallenge
         /// <returns></returns>
         public static string ConcatNames(string fName, string lName)
         {
-            throw new NotImplementedException("ConcatNames method not implemented.");
+            return fName + " " + lName;
         }
     }//end of program
 }
