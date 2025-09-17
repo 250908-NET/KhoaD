@@ -92,9 +92,9 @@ namespace _5_OperatorsChallenge.Tests
         }
         [Theory]
         [MemberData(nameof(_pairNumbers))]
-        public void OrShouldReturnFalse(int num1, int num2)
+        public void OrShouldReturnTrue(int num1, int num2)
         {
-            Assert.False(Program.Or(num1, num2));
+            Assert.True(Program.Or(num1, num2));
         }
 
     }
