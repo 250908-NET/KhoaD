@@ -71,20 +71,58 @@ JOIN Customer on Customer.CustomerId = Invoice.CustomerId
 WHERE Customer.Country = 'Brazil';
 
 -- Show all invoices together with the name of the sales agent for each one
-SELECT *
-FROM Invoice;
+SELECT Invoice.InvoiceId, Invoice.InvoiceDate, Customer.FirstName, Customer.LastName, Employee.FirstName as SalesAgentFirstName, Employee.LastName as SalesAgentLastName
+FROM Invoice
+JOIN Customer on Customer.CustomerId = Invoice.CustomerId
+JOIN Employee on Employee.EmployeeId = Customer.SupportRepId;
 
 -- Which sales agent made the most sales in 2009?
+SELECT TOP 1 Employee.FirstName, Employee.LastName, SUM(Invoice.Total) as InvoiceTotal
+FROM Invoice
+JOIN Customer ON Invoice.CustomerId = Customer.CustomerId
+JOIN Employee ON Customer.SupportRepId = Employee.EmployeeId
+WHERE YEAR(Invoice.InvoiceDate) = 2009
+GROUP BY Employee.EmployeeId, Employee.FirstName, Employee.LastName
+ORDER BY InvoiceTotal DESC;
 
 -- How many customers are assigned to each sales agent?
+SELECT Employee.FirstName, Employee.LastName, COUNT(Customer.CustomerId) as CustomerCount
+FROM Employee
+JOIN Customer ON Employee.EmployeeId = Customer.SupportRepId
+WHERE Employee.Title = 'Sales Support Agent'
+GROUP BY Employee.EmployeeId, Employee.FirstName, Employee.LastName;
 
--- Which track was purchased the most ing 20010?
+-- Which track was purchased the most in 2010?
+-- 
+SELECT Track.Name AS TrackName, COUNT(InvoiceLine.InvoiceId) AS PurchasedCount
+FROM InvoiceLine
+JOIN Track ON Track.TrackId = InvoiceLine.TrackId
+JOIN Invoice ON Invoice.InvoiceId = InvoiceLine.InvoiceId
+WHERE YEAR(Invoice.InvoiceDate) = 2010
+GROUP BY Track.Name
+ORDER BY PurchasedCount DESC;
 
 -- Show the top three best selling artists.
+SELECT Artist.Name, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS TotalSales
+FROM InvoiceLine
+JOIN Track ON Track.TrackId = InvoiceLine.TrackId
+JOIN Album ON Album.AlbumId = Track.AlbumId
+JOIN Artist ON Artist.ArtistId = Album.ArtistId
+GROUP BY Artist.ArtistId, Artist.Name
+ORDER BY TotalSales DESC;
 
 -- Which customers have the same initials as at least one other customer?
+GO
+CREATE VIEW CustomerInitials AS 
+SELECT CustomerId, FirstName, LastName, LEFT(FirstName,1) + LEFT(LastName,1) AS Initials FROM Customer;
+GO
 
-
+SELECT DISTINCT c1.CustomerId, c1.FirstName, c1.LastName, c2.FirstName, c2.LastName, c1.Initials
+FROM CustomerInitials c1
+JOIN CustomerInitials c2
+ON c1.Initials = c2.Initials 
+AND c1.CustomerId <> c2.CustomerId
+ORDER BY c1.Initials, c1.LastName, c1.FirstName;
 
 -- ADVACED CHALLENGES
 -- solve these with a mixture of joins, subqueries, CTE, and set operators.
@@ -92,6 +130,14 @@ FROM Invoice;
 -- plan for them is the same, or different.
 
 -- 1. which artists did not make any albums at all?
+SELECT Artist.Name
+FROM Artist
+LEFT JOIN Album ON Artist.ArtistId = Album.ArtistId
+WHERE Album.ArtistId IS NULL;
+
+SELECT Artist.Name
+FROM Artist
+WHERE ArtistId NOT IN (SELECT ArtistId FROM Album);
 
 -- 2. which artists did not record any tracks of the Latin genre?
 
