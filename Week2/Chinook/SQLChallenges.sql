@@ -5,7 +5,8 @@
     -- Test your connection with a simple query (like a select)
     -- Execute the Chinook database (to create Chinook resources in your db)
 
-
+USE MyDatabase;
+GO
 -- On the Chinook DB, practice writing queries with the following exercises
 
 -- BASIC CHALLENGES

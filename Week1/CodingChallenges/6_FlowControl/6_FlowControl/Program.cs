@@ -1,8 +1,4 @@
-﻿
-
-
-
-using System;
+﻿using System;
 
 namespace _6_FlowControl
 {
@@ -19,7 +15,8 @@ namespace _6_FlowControl
         /// <returns></returns>
         public static int GetValidTemperature()
         {
-            throw new NotImplementedException($"GetValidTemperature() has not been implemented.");
+            int temp;
+            string input = Console.ReadLine();
         }
 
         /// <summary>
