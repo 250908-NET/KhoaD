@@ -1,4 +1,4 @@
-# 🎮 Project Setup Guide
+# Project Setup Guide
 
 ## This document provides step-by-step instructions to set up the Games API project with ASP.NET Core, Entity Framework Core, Swagger, and Serilog.
 
