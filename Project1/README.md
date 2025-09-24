@@ -2,6 +2,9 @@ This project is a video game catalog designed for managing video games and the p
 
 Stretch goals includes implementing a rating system that allows users to provide reviews and score games and adding a genre table.
 
+References:
+https://mermaid.js.org/syntax/entityRelationshipDiagram.html
+
 ```mermaid
 erDiagram
     GAME {
@@ -23,3 +26,4 @@ erDiagram
 
     GAME ||--o{ GAMEPLATFORM : runs_on
     PLATFORM ||--o{ GAMEPLATFORM : supports
+
