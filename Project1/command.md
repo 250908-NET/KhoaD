@@ -11,9 +11,29 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Swashbuckle.AspNetCore   # Swagger UI
 
+*serilog
+dotnet add package Serilog.AspNetCore
+dotnet add package Serilog.Settings.Configuration
+dotnet add package Serilog.Sinks.Console
+
 *in Project1.Tests
 dotnet add package Microsoft.EntityFrameworkCore.InMemory
 dotnet add package Xunit
+
+*Manage Schema
+dotnet ef migrations add InitialCreate -o Data/Migrations
+dotnet ef database update
+
+*run
+dotnet watch run --project
+
+*website
+https://localhost:5182/swagger
+
+
+
+
+
 
 dotnet new tool-manifest
 dotnet tool install --local dotnet-ef
