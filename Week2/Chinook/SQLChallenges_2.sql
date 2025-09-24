@@ -4,17 +4,15 @@
     -- Connect to the server (Azure Data Studio / Database extension)
     -- Test your connection with a simple query (like a select)
     -- Execute the Chinook database (to create Chinook resources in your db)
-
-USE MyDatabase;
-GO
 CREATE DATABASE GamesDatabase;
+USE GamesDatabase;
+GO
+
 -- On the Chinook DB, practice writing queries with the following exercises
 
 -- BASIC CHALLENGES
 -- List all customers (full name, customer id, and country) who are not in the USA
-SELECT CustomerID, FirstName, LastName, Country 
-FROM Customer
-WHERE Country <> 'USA';
+SELECT 1;
 
 -- List all customers from Brazil
 SELECT CustomerID, FirstName, LastName, Country 
