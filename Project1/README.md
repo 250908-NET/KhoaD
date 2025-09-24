@@ -19,11 +19,7 @@ erDiagram
         string Name
     }
 
-    GAMEPLATFORM {
-        int GameId FK
-        int PlatformId FK
-    }
 
-    GAME ||--o{ GAMEPLATFORM : runs_on
-    PLATFORM ||--o{ GAMEPLATFORM : supports
+    GAME ||--o{ PLATFORM : runs_on
+    PLATFORM ||--o{ GAME : supports
 
