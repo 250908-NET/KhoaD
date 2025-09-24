@@ -3,31 +3,35 @@ This project is a video game catalog designed for managing video games, their ge
 Stretch goals includes implementing a rating system that allows users to provide reviews and score games.
 
 ```mermaid
-ERD
-    Game {
+erDiagram
+    GAME {
         int GameId PK
         string Title
         string Developer
         int ReleaseYear
     }
-    Genre {
+
+    GENRE {
         int GenreId PK
         string Name
     }
-    Platform {
+
+    PLATFORM {
         int PlatformId PK
         string Name
     }
-    GameGenre {
+
+    GAMEGENRE {
         int GameId FK
         int GenreId FK
     }
-    GamePlatform {
+
+    GAMEPLATFORM {
         int GameId FK
         int PlatformId FK
     }
 
-    Game ||--o{ GameGenre : "has"
-    Genre ||--o{ GameGenre : "categorizes"
-    Game ||--o{ GamePlatform : "runs on"
-    Platform ||--o{ GamePlatform : "supports"
+    GAME ||--o{ GAMEGENRE : has
+    GENRE ||--o{ GAMEGENRE : categorizes
+    GAME ||--o{ GAMEPLATFORM : runs_on
+    PLATFORM ||--o{ GAMEPLATFORM : supports
