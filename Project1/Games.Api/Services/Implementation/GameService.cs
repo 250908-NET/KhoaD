@@ -9,7 +9,7 @@ public class GameService : IGameService
 
     public GameService(IGameRepository repo)
     {
-        _repo = repo;
+        _repo = repo ?? throw new ArgumentNullException(nameof(repo));
     }
 
     public async Task<List<Game>> GetAllAsync() => await _repo.GetAllAsync();

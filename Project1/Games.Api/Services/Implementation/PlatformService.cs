@@ -9,7 +9,7 @@ public class PlatformService : IPlatformService
 
     public PlatformService(IPlatformRepository repo)
     {
-        _repo = repo;
+        _repo = repo ?? throw new ArgumentNullException(nameof(repo));
     }
 
     public async Task<List<Platform>> GetAllAsync() => await _repo.GetAllAsync();

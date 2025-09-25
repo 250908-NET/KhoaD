@@ -25,6 +25,10 @@ dotnet add package Serilog.Sinks.Console
 ## In Games.Tests:
 dotnet add package Microsoft.EntityFrameworkCore.InMemory
 dotnet add package Xunit
+dotnet add package Xunit.runner.visualstudio
+dotnet add reference Games.Api
+dotnet add package FluentAssertions
+dotnet add package Moq
 
 ## EF Core:
 dotnet ef migrations add InitialCreate -o Data/Migrations
