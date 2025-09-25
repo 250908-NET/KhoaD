@@ -56,7 +56,7 @@ References:
 https://mermaid.js.org/syntax/entityRelationshipDiagram.html
 
 ```mermaid
-ERDiagram
+erDiagram
     GAME {
         int GameId PK
         string Title
@@ -78,5 +78,4 @@ ERDiagram
 
     GAME ||--o{ GAMEPLATFORM : has
     PLATFORM ||--o{ GAMEPLATFORM : supports
-
-
+```
