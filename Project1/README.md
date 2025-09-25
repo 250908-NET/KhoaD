@@ -41,8 +41,9 @@ A **.NET 9 Web API** for managing a video game catalog, including **Games**, **P
   "manufacturer": "Nintendo",
   "releaseYear": 1994
 }
+```
 
-## Stretch Goals
+### Stretch Goals
 - Add a **user rating system** for games  
 - Add **genres** table with many-to-many relationships  
 - Authentication & authorization  
