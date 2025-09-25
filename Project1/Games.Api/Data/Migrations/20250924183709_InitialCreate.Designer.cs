@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Games.Api.Data.Migrations
 {
+    
     [DbContext(typeof(GamesDbContext))]
     [Migration("20250924183709_InitialCreate")]
     partial class InitialCreate

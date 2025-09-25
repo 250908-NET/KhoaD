@@ -106,5 +106,7 @@ namespace Games.Tests.Services
             // Assert
             act.Should().Throw<ArgumentNullException>();
         }
+
+        
     }
 }

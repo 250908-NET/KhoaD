@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using Games.Data;
 using Games.Models;
@@ -6,6 +5,7 @@ using Games.Services;
 using Games.Repositories;
 using Games.DTOs;
 using Serilog;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -270,5 +270,6 @@ app.MapGet("/platforms/{platformId}/games", async (GamesDbContext db, int platfo
     return Results.Ok(games);
 });
 
-
 app.Run();
+
+public partial class Program { }

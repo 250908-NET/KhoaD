@@ -5,6 +5,7 @@
 namespace Games.Api.Data.Migrations
 {
     /// <inheritdoc />
+    
     public partial class InitialCreate : Migration
     {
         /// <inheritdoc />

@@ -29,6 +29,9 @@ In Games Project:
 - dotnet add reference Games.Api
 - dotnet add package FluentAssertions
 - dotnet add package Moq
+- dotnet add package coverlet.collector
+- dotnet add package Microsoft.AspNetCore.Mvc.Testing
+
 
 ## EF Core:
 - dotnet ef migrations add InitialCreate -o Data/Migrations

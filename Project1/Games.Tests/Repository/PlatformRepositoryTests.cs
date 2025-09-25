@@ -2,6 +2,7 @@ using FluentAssertions;
 using Games.Data;
 using Games.Models;
 using Games.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Games.Tests
 {
@@ -85,5 +86,39 @@ namespace Games.Tests
             platformInDb!.Name.Should().Be("Nintendo Switch");
             platformInDb.Manufacturer.Should().Be("Nintendo");
         }
+
+        [Fact]
+        public async Task UpdateAsync_ShouldModifyPlatformInDatabase()
+        {
+            // Arrange
+            await SeedDataAsync();
+            var platform = await Context.Platforms.FirstAsync();
+            platform.Name = "SNES";
+
+            // Act
+            await _repository.UpdateAsync(platform);
+            await _repository.SaveChangesAsync();
+
+            // Assert
+            var updated = await Context.Platforms.FindAsync(platform.PlatformId);
+            updated!.Name.Should().Be("SNES");
+        }
+
+        [Fact]
+        public async Task DeleteAsync_ShouldRemovePlatformFromDatabase()
+        {
+            // Arrange
+            await SeedDataAsync();
+            var platform = await Context.Platforms.FirstAsync();
+
+            // Act
+            await _repository.DeleteAsync(platform.PlatformId);
+            await _repository.SaveChangesAsync();
+
+            // Assert
+            var deleted = await Context.Platforms.FindAsync(platform.PlatformId);
+            deleted.Should().BeNull();
+        }
     }
+    
 }

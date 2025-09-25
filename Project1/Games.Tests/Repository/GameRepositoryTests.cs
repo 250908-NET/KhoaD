@@ -2,6 +2,8 @@ using FluentAssertions;
 using Games.Data;
 using Games.Models;
 using Games.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Games.Tests
 {
@@ -85,5 +87,41 @@ namespace Games.Tests
             gameInDb!.Title.Should().Be("Chrono Trigger");
             gameInDb.Developer.Should().Be("Square");
         }
+
+        [Fact]
+        public async Task UpdateAsync_ShouldModifyGameInDatabase()
+        {
+            // Arrange
+            await SeedDataAsync();
+            var game = await Context.Games.FirstAsync();
+            game.Title = "Final Fantasy III";
+
+            // Act
+            await _repository.UpdateAsync(game);
+            await _repository.SaveChangesAsync();
+
+            // Assert
+            var updated = await Context.Games.FindAsync(game.GameId);
+            updated!.Title.Should().Be("Final Fantasy III");
+        }
+
+        [Fact]
+        public async Task DeleteAsync_ShouldRemoveGameFromDatabase()
+        {
+            // Arrange
+            await SeedDataAsync();
+            var game = await Context.Games.FirstAsync();
+
+            // Act
+            await _repository.DeleteAsync(game.GameId);
+            await _repository.SaveChangesAsync();
+
+            // Assert
+            var deleted = await Context.Games.FindAsync(game.GameId);
+            deleted.Should().BeNull();
+        }
+        
     }
+    
+
 }
