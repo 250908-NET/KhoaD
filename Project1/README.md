@@ -56,7 +56,7 @@ References:
 https://mermaid.js.org/syntax/entityRelationshipDiagram.html
 
 ```mermaid
-ERD
+ERDiagram
     GAME {
         int GameId PK
         string Title
