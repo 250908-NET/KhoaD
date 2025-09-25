@@ -51,15 +51,18 @@ dotnet ef database update
 
 ## Example JSONs
 POST /games
+```json
 {
     "title": "Stardew Valley",
     "developer": "ConcernedApe",
     "releaseYear": 2016
 }
-
+```
+```json
 POST /platform
 {
   "name": "Nintendo Switch 2",
   "manufacturer": "Nintendo",
   "releaseYear": 2025
 }
+```
