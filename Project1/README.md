@@ -1,12 +1,61 @@
-This project is a video game catalog designed for managing video games and the platforms they run on.
+A **.NET 9 Web API** for managing a video game catalog, including **Games**, **Platforms**, and their relationships.  
 
-Stretch goals includes implementing a rating system that allows users to provide reviews and score games and adding a genre table.
+## API Endpoints
+
+### Games
+- `GET /games` → list all games  
+- `GET /games/{id}` → get game by ID  
+- `POST /games` → create a game  
+- `PUT /games/{id}` → update a game  
+- `DELETE /games/{id}` → delete a game  
+
+### Platforms
+- `GET /platforms` → list all platforms  
+- `GET /platforms/{id}` → get platform by ID  
+- `POST /platforms` → create a platform  
+- `PUT /platforms/{id}` → update a platform  
+- `DELETE /platforms/{id}` → delete a platform  
+
+### Relationships
+- `POST /games/{gameId}/platforms/{platformId}` → link game to platform  
+- `GET /games/{gameId}/platforms` → get platforms for a game  
+- `GET /platforms/{platformId}/games` → get games for a platform  
+
+---
+
+## Example JSONs
+
+### Create a Game
+```json
+{
+  "title": "Final Fantasy VI",
+  "developer": "Square",
+  "releaseYear": 1994
+}
+```
+
+### Create a Platform
+```json
+{
+  "name": "Super Nintendo",
+  "manufacturer": "Nintendo",
+  "releaseYear": 1994
+}
+
+## Stretch Goals
+- Add a **user rating system** for games  
+- Add **genres** table with many-to-many relationships  
+- Authentication & authorization  
+
+
+
+
 
 References:
 https://mermaid.js.org/syntax/entityRelationshipDiagram.html
 
 ```mermaid
-erDiagram
+ERD
     GAME {
         int GameId PK
         string Title
@@ -17,9 +66,16 @@ erDiagram
     PLATFORM {
         int PlatformId PK
         string Name
+        string Manufacturer
+        int ReleaseYear
     }
 
+    GAMEPLATFORM {
+        int GameId FK
+        int PlatformId FK
+    }
 
-    GAME ||--o{ PLATFORM : runs_on
-    PLATFORM ||--o{ GAME : supports
+    GAME ||--o{ GAMEPLATFORM : has
+    PLATFORM ||--o{ GAMEPLATFORM : supports
+
 
