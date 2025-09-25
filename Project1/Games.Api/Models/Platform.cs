@@ -4,21 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Games.Models;
 
-public class Game
+public class Platform
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int GameId { get; set; }
+    public int PlatformId { get; set; }
 
     [Required]
-    [MaxLength(100)]
-    public string Title { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;   // ex. "PlayStation 5"
 
     [Required]
-    [MaxLength(100)]
-    public string Developer { get; set; } = string.Empty;
+    public string Manufacturer { get; set; } = string.Empty;   // ex. "Sony"
 
-    [Required]
     public int ReleaseYear { get; set; }
 
     // Many to many relationship

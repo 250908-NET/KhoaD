@@ -1,12 +1,13 @@
 using Games.Models;
 
-namespace Games.Repositories
+namespace Games.Repositories;
+
+public interface IGameRepository
 {
-    public interface IGameRepository
-    {
-        Task<List<Game>> GetAllAsync();
-        Task<Game?> GetByIdAsync(int id);
-        Task AddAsync(Game game);
-        Task SaveChangesAsync();
-    }
+    Task<List<Game>> GetAllAsync();
+    Task<Game?> GetByIdAsync(int id);
+    Task AddAsync(Game game);
+    Task UpdateAsync(Game game);
+    Task DeleteAsync(int id);
+    Task SaveChangesAsync();
 }

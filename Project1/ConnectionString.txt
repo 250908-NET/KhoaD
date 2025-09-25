@@ -1,1 +1,1 @@
-Server=localhost,1433; Database=MyDatabase;TrustServerCertificate=True; User Id=sa;Password=JobMoney12345!
+Server=localhost,1433; Database=GamesDatabase;TrustServerCertificate=True; User Id=sa;Password=JobMoney12345!

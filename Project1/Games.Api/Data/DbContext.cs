@@ -11,21 +11,27 @@ public class GamesDbContext  : DbContext
 
     // DbSets (tables)
     public DbSet<Game> Games { get; set; } = null!;
+    public DbSet<Platform> Platforms { get; set; } = null!;
+    public DbSet<GamePlatform> GamePlatforms { get; set; } = null!;
 
     //  Model configuration
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        
-        modelBuilder.Entity<Game>()
-            .Property(g => g.Title)
-            .IsRequired()
-            .HasMaxLength(100);
+        // Composite key for join table
+        modelBuilder.Entity<GamePlatform>()
+            .HasKey(gc => new { gc.GameId, gc.PlatformId });
+            
+        // Relationships
+        modelBuilder.Entity<GamePlatform>()
+            .HasOne(gp => gp.Game)
+            .WithMany(g => g.GamePlatforms)
+            .HasForeignKey(gp => gp.GameId);
 
-        
-        modelBuilder.Entity<Game>()
-            .Property(g => g.Developer)
-            .HasMaxLength(100);
+        modelBuilder.Entity<GamePlatform>()
+            .HasOne(gp => gp.Platform)
+            .WithMany(p => p.GamePlatforms)
+            .HasForeignKey(gp => gp.PlatformId);
     }
 }
