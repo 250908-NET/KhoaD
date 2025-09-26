@@ -18,9 +18,6 @@ A **.NET 9 Web API** for managing a video game catalog, including **Games**, **P
 
 ### Relationships
 - `POST /games/{gameId}/platforms/{platformId}` → link game to platform  
-- `GET /games/{gameId}/platforms` → get platforms for a game  
-- `GET /platforms/{platformId}/games` → get games for a platform  
-
 ---
 
 ## Example JSONs
