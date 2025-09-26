@@ -34,6 +34,7 @@ public class GameRepository : IGameRepository
     public async Task UpdateAsync(Game game)
     {
         _context.Games.Update(game);
+        await Task.CompletedTask;
     }
 
     public async Task DeleteAsync(int id)

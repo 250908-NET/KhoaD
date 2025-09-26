@@ -98,6 +98,39 @@ namespace Games.Tests.Services
         }
 
         [Fact]
+        public async Task UpdateAsync_ShouldCallRepositoryUpdate()
+        {
+            // Arrange
+            var updatedPlatform = new Platform { PlatformId = 1, Name = "Updated Console", Manufacturer = "Updated Manufacturer", ReleaseYear = 2025 };
+
+            _mockRepository.Setup(repo => repo.UpdateAsync(updatedPlatform))
+                           .Returns(Task.CompletedTask);
+
+            // Act
+            await _service.UpdateAsync(updatedPlatform);
+
+            // Assert
+            _mockRepository.Verify(repo => repo.UpdateAsync(updatedPlatform), Times.Once);
+            _mockRepository.Verify(repo => repo.SaveChangesAsync(), Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteAsync_ShouldDeletePlatformAndSave()
+        {
+            // Arrange
+            int platformId = 1;
+            _mockRepository.Setup(repo => repo.DeleteAsync(platformId))
+                           .Returns(Task.CompletedTask);
+
+            // Act
+            await _service.DeleteAsync(platformId);
+
+            // Assert
+            _mockRepository.Verify(repo => repo.DeleteAsync(platformId), Times.Once);
+            _mockRepository.Verify(repo => repo.SaveChangesAsync(), Times.Once);
+        }
+        
+        [Fact]
         public void Constructor_WithNullRepository_ShouldThrow()
         {
             // Act

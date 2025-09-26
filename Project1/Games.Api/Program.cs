@@ -12,7 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Connection string
 string CS = File.ReadAllText("../ConnectionString.txt");
 
-
 // Add services to the container
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
@@ -50,11 +49,6 @@ app.UseHttpsRedirection();
 // Minimal API Endpoints
 // -----------------------------------------------------
 
-app.MapGet("/", () =>
-{
-    return "Hello World";
-});
-
 // -----------------------------------------------------
 // GAMES ENDPOINTS
 // -----------------------------------------------------
@@ -69,7 +63,6 @@ app.MapGet("/games", async (GamesDbContext db) =>
 
     return Results.Ok(games.Select(g => g.ToDto()));
 });
-
 
 // GET: receive game by id
 app.MapGet("/games/{id}", async (GamesDbContext db, int id) =>
@@ -190,23 +183,24 @@ app.MapDelete("/platforms/{id}", async (IPlatformService service, int id) =>
 });
 
 // -----------------------------------------------------
-// Link game to a platform
+// POST: Link game to a platform
 app.MapPost("/games/{gameId}/platforms/{platformId}", async (GamesDbContext db, int gameId, int platformId) =>
 {
     var game = await db.Games.FindAsync(gameId);
-    var platform = await db.Platforms.FindAsync(platformId);
-
-    if (await db.Games.FindAsync(gameId) is null)
+    if (game is null)
     {
         return Results.NotFound("Game not found");
     }
 
-    if (await db.Platforms.FindAsync(platformId) is null)
+    var platform = await db.Platforms.FindAsync(platformId);
+    if (platform is null)
     {
         return Results.NotFound("Platform not found");
     }
 
-    if (await db.GamePlatforms.FindAsync(gameId, platformId) is null)
+    var existingLink = await db.GamePlatforms.FindAsync(gameId, platformId);
+
+    if (existingLink is null)
     {
         db.GamePlatforms.Add(new GamePlatform { GameId = gameId, PlatformId = platformId });
         await db.SaveChangesAsync();
@@ -214,13 +208,14 @@ app.MapPost("/games/{gameId}/platforms/{platformId}", async (GamesDbContext db, 
 
     return Results.Ok(new
     {
-        Message = $"Linked successfully",
+        Message = "Linked successfully",
         Game = game.Title,
         Platform = platform.Name
     });
 });
 
-// Get all platforms for a game
+/*
+// GET: Get all platforms for a game
 app.MapGet("/games/{gameId}/platforms", async (GamesDbContext db, int gameId) =>
 {
     var game = await db.Games
@@ -269,7 +264,6 @@ app.MapGet("/platforms/{platformId}/games", async (GamesDbContext db, int platfo
 
     return Results.Ok(games);
 });
+*/
 
 app.Run();
-
-public partial class Program { }

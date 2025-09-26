@@ -34,7 +34,7 @@ namespace Games.Tests
         }
 
         [Fact]
-        public async Task GetByIdAsync_WithValidId_ShouldReturnGameWithPlatforms()
+        public async Task GetByIdAsync_WithValidIdShouldReturnGameWithPlatforms()
         {
             // Arrange
             await SeedDataAsync();
@@ -50,7 +50,7 @@ namespace Games.Tests
         }
 
         [Fact]
-        public async Task GetByIdAsync_WithInvalidId_ShouldReturnNull()
+        public async Task GetByIdAsync_WithInvalidIdShouldReturnNull()
         {
             // Arrange
             await SeedDataAsync();
@@ -119,6 +119,49 @@ namespace Games.Tests
             // Assert
             var deleted = await Context.Games.FindAsync(game.GameId);
             deleted.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task SaveChangesAsync_ShouldPersistChangesToDatabase()
+        {
+            // Arrange
+            var game = new Game
+            {
+                Title = "Test Game",
+                Developer = "Test Studio",
+                ReleaseYear = 2024
+            };
+
+            await _repository.AddAsync(game);
+
+            // Act
+            await _repository.SaveChangesAsync();
+
+            // Assert
+            var gameInDb = await Context.Games.FirstOrDefaultAsync(g => g.Title == "Test Game");
+            gameInDb.Should().NotBeNull();
+            gameInDb!.Developer.Should().Be("Test Studio");
+        }
+
+        [Fact]
+        public async Task SaveChangesAsync_ShouldNotPersistIfNotCalled()
+        {
+            // Arrange
+            var game = new Game
+            {
+                Title = "Uncommitted Game",
+                Developer = "Test Studio",
+                ReleaseYear = 2024
+            };
+
+            await _repository.AddAsync(game);
+            // Intentionally NOT calling SaveChangesAsync
+
+            // Act
+            var gameInDb = await Context.Games.FirstOrDefaultAsync(g => g.Title == "Uncommitted Game");
+
+            // Assert
+            gameInDb.Should().BeNull(); // not persisted
         }
         
     }

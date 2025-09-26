@@ -119,6 +119,48 @@ namespace Games.Tests
             var deleted = await Context.Platforms.FindAsync(platform.PlatformId);
             deleted.Should().BeNull();
         }
+
+        [Fact]
+        public async Task SaveChangesAsync_ShouldPersistChangesToDatabase()
+        {
+            // Arrange
+            var platform = new Platform
+            {
+                Name = "Test Console",
+                Manufacturer = "Test Corp",
+                ReleaseYear = 2024
+            };
+
+            await _repository.AddAsync(platform);
+
+            // Act
+            await _repository.SaveChangesAsync();
+
+            // Assert
+            var platformInDb = await Context.Platforms.FirstOrDefaultAsync(p => p.Name == "Test Console");
+            platformInDb.Should().NotBeNull();
+            platformInDb!.Manufacturer.Should().Be("Test Corp");
+        }
+
+        [Fact]
+        public async Task SaveChangesAsync_ShouldNotPersistIfNotCalled()
+        {
+            // Arrange
+            var platform = new Platform
+            {
+                Name = "Uncommitted Console",
+                Manufacturer = "Test Corp",
+                ReleaseYear = 2024
+            };
+
+            await _repository.AddAsync(platform);
+            // Intentionally NOT calling SaveChangesAsync
+
+            // Act
+            var platformInDb = await Context.Platforms.FirstOrDefaultAsync(p => p.Name == "Uncommitted Console");
+
+            // Assert
+            platformInDb.Should().BeNull(); // not persisted
+        }
     }
-    
 }

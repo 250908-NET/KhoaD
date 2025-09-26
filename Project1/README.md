@@ -42,15 +42,13 @@ A **.NET 9 Web API** for managing a video game catalog, including **Games**, **P
   "releaseYear": 1994
 }
 ```
+### Run Command
+- dotnet watch run
 
 ### Stretch Goals
 - Add a **user rating system** for games  
 - Add **genres** table with many-to-many relationships  
 - Authentication & authorization  
-
-
-
-
 
 References:
 https://mermaid.js.org/syntax/entityRelationshipDiagram.html

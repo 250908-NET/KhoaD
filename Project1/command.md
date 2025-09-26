@@ -31,6 +31,7 @@ In Games Project:
 - dotnet add package Moq
 - dotnet add package coverlet.collector
 - dotnet add package Microsoft.AspNetCore.Mvc.Testing
+- dotnet test --collect:"XPlat Code Coverage"
 
 
 ## EF Core:

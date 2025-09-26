@@ -42,7 +42,7 @@ namespace Games.Tests.Services
         }
 
         [Fact]
-        public async Task GetByIdAsync_WithValidId_ShouldReturnGame()
+        public async Task GetByIdAsync_WithValidIdShouldReturnGame()
         {
             // Arrange
             var expectedGame = new Game
@@ -66,7 +66,7 @@ namespace Games.Tests.Services
         }
 
         [Fact]
-        public async Task GetByIdAsync_WithInvalidId_ShouldReturnNull()
+        public async Task GetByIdAsync_WithInvalidIdShouldReturnNull()
         {
             // Arrange
             _mockRepository.Setup(repo => repo.GetByIdAsync(999))
@@ -98,7 +98,51 @@ namespace Games.Tests.Services
         }
 
         [Fact]
-        public void Constructor_WithNullRepository_ShouldThrow()
+        public async Task UpdateAsync_ShouldCallRepositoryUpdateAndSaveChanges()
+        {
+            // Arrange
+            var game = new Game
+            {
+                GameId = 1,
+                Title = "Halo",
+                Developer = "Bungie",
+                ReleaseYear = 2001
+            };
+
+            _mockRepository.Setup(r => r.UpdateAsync(game))
+                           .Returns(Task.CompletedTask);
+            _mockRepository.Setup(r => r.SaveChangesAsync())
+                           .Returns(Task.CompletedTask);
+
+            // Act
+            await _service.UpdateAsync(game);
+
+            // Assert
+            _mockRepository.Verify(r => r.UpdateAsync(game), Times.Once);
+            _mockRepository.Verify(r => r.SaveChangesAsync(), Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteAsync_ShouldCallRepositoryDeleteAndSaveChanges()
+        {
+            // Arrange
+            var gameId = 1;
+
+            _mockRepository.Setup(r => r.DeleteAsync(gameId))
+                           .Returns(Task.CompletedTask);
+            _mockRepository.Setup(r => r.SaveChangesAsync())
+                           .Returns(Task.CompletedTask);
+
+            // Act
+            await _service.DeleteAsync(gameId);
+
+            // Assert
+            _mockRepository.Verify(r => r.DeleteAsync(gameId), Times.Once);
+            _mockRepository.Verify(r => r.SaveChangesAsync(), Times.Once);
+        }
+
+        [Fact]
+        public void ConstructorWithNullRepositoryShouldThrow()
         {
             // Act
             Action act = () => new GameService(null!);

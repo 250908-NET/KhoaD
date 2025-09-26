@@ -31,6 +31,7 @@ public class PlatformRepository : IPlatformRepository
     public async Task UpdateAsync(Platform Platform)
     {
         _context.Platforms.Update(Platform);
+        await Task.CompletedTask;
     }
 
     public async Task DeleteAsync(int id)
